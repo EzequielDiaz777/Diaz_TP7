@@ -6,9 +6,9 @@
 package Diaz_TP7.vista;
 
 import Diaz_TP7.entidad.Alumno;
+import java.awt.event.KeyEvent;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,8 +24,40 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
     public viewFormularioDeAlumnos(HashSet<Alumno>listaDeAlumnos) {
         initComponents();
         this.listaDeAlumnos = listaDeAlumnos;
+        this.requestFocus();
+        jtfNumeroDeLegajo.requestFocus();
     }
-
+    
+    public void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(this,mensaje);
+    }
+    
+    public void limpiar(){
+        jtfNumeroDeLegajo.setText("");
+        jtfNombre.setText("");
+        jtfApellido.setText("");
+    }
+    
+    public void agregarAlumno(){
+        int numeroDeLegajo = Integer.parseInt(jtfNumeroDeLegajo.getText());
+        Alumno alumno = new Alumno(numeroDeLegajo, jtfNombre.getText(), jtfApellido.getText());
+        if(listaDeAlumnos.isEmpty()){
+            listaDeAlumnos.add(alumno);
+            limpiar();
+            mensaje("Alumno agregado correctamente.");
+            jtfNumeroDeLegajo.requestFocus();
+        } else {
+            boolean agregar = listaDeAlumnos.add(alumno);
+            if(agregar){
+                listaDeAlumnos.add(alumno);
+                mensaje("Alumno agregado correctamente.");
+                limpiar();
+                jtfNumeroDeLegajo.requestFocus();
+            } else {
+                mensaje("El alumno ya se encuentra ingresado.");
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +84,11 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
                 jbSalirActionPerformed(evt);
             }
         });
+        jbSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbSalirKeyPressed(evt);
+            }
+        });
 
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -59,11 +96,21 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
                 jbNuevoActionPerformed(evt);
             }
         });
+        jbNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbNuevoKeyPressed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbGuardarActionPerformed(evt);
+            }
+        });
+        jbGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbGuardarKeyPressed(evt);
             }
         });
 
@@ -74,6 +121,33 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
         jlApellido.setText("Apellido:");
 
         jllNombre.setText("Nombre:");
+
+        jtfNumeroDeLegajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfNumeroDeLegajoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfNumeroDeLegajoKeyTyped(evt);
+            }
+        });
+
+        jtfApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfApellidoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfApellidoKeyTyped(evt);
+            }
+        });
+
+        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,11 +175,13 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
                             .addComponent(jlApellido)
                             .addComponent(jllNombre))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfNumeroDeLegajo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                            .addComponent(jtfNombre))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfNombre)
+                            .addComponent(jtfApellido)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jtfNumeroDeLegajo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,7 +199,7 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jllNombre)
                     .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSalir)
                     .addComponent(jbNuevo)
@@ -131,7 +207,7 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(80, 80, 400, 232);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -139,40 +215,84 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        jtfNumeroDeLegajo.setText("");
-        jtfNombre.setText("");
-        jtfApellido.setText("");
+        limpiar();
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        try{
-            int numeroDeLegajo = Integer.parseInt(jtfNumeroDeLegajo.getText());
-            Alumno alumno = new Alumno(numeroDeLegajo, jtfNombre.getText(), jtfApellido.getText());
-            if(listaDeAlumnos.isEmpty()){
-                listaDeAlumnos.add(alumno);
-                jtfNumeroDeLegajo.setText("");
-                jtfNombre.setText("");
-                jtfApellido.setText("");
-                JOptionPane.showMessageDialog(this,"Alumno agregado correctamente.");
+        if (jtfNumeroDeLegajo.getText().trim().length() == 0 || jtfNombre.getText().trim().length() == 0 || jtfApellido.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
             } else {
-                boolean agregar = listaDeAlumnos.add(alumno);
-                if(agregar){
-                    listaDeAlumnos.add(alumno);
-                    jtfNumeroDeLegajo.setText("");
-                    jtfNombre.setText("");
-                    jtfApellido.setText("");
-                    JOptionPane.showMessageDialog(this,"Alumno agregado correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(this,"El alumno ya se encuentra ingresado.");
-                    jtfNumeroDeLegajo.setText("");
-                    jtfNombre.setText("");
-                    jtfApellido.setText("");
-                }
+                agregarAlumno();
             }
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this,"Numero de legajo incorrecto.");
-        }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jtfNumeroDeLegajoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNumeroDeLegajoKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtfNumeroDeLegajoKeyTyped
+
+    private void jtfApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfApellidoKeyTyped
+        
+    }//GEN-LAST:event_jtfApellidoKeyTyped
+
+    private void jtfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyTyped
+        
+    }//GEN-LAST:event_jtfNombreKeyTyped
+
+    private void jtfNumeroDeLegajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNumeroDeLegajoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfNumeroDeLegajo.getText().trim().length() == 0 || jtfNombre.getText().trim().length() == 0 || jtfApellido.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarAlumno();
+            }
+        }
+    }//GEN-LAST:event_jtfNumeroDeLegajoKeyPressed
+
+    private void jtfApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfApellidoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfNumeroDeLegajo.getText().trim().length() == 0 || jtfNombre.getText().trim().length() == 0 || jtfApellido.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarAlumno();
+            }
+        }
+    }//GEN-LAST:event_jtfApellidoKeyPressed
+
+    private void jtfNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfNumeroDeLegajo.getText().trim().length() == 0 || jtfNombre.getText().trim().length() == 0 || jtfApellido.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarAlumno();
+            }
+        }
+    }//GEN-LAST:event_jtfNombreKeyPressed
+
+    private void jbGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbGuardarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfNumeroDeLegajo.getText().trim().length() == 0 || jtfNombre.getText().trim().length() == 0 || jtfApellido.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarAlumno();
+            }
+        }
+    }//GEN-LAST:event_jbGuardarKeyPressed
+
+    private void jbNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbNuevoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            limpiar();
+        }
+    }//GEN-LAST:event_jbNuevoKeyPressed
+
+    private void jbSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbSalirKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dispose();
+        }
+    }//GEN-LAST:event_jbSalirKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

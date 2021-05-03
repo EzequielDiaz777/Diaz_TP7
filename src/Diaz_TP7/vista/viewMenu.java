@@ -29,14 +29,17 @@ public class viewMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jmbManu = new javax.swing.JMenuBar();
         jmAltas = new javax.swing.JMenu();
         jmiAltaDeMaterias = new javax.swing.JMenuItem();
         jmiAltaDeAlumnos = new javax.swing.JMenuItem();
         jmFormularioDeInscripcion = new javax.swing.JMenu();
+        jmiInscribirAlumno = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
+        jmiSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Formularios");
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -56,6 +59,7 @@ public class viewMenu extends javax.swing.JFrame {
             }
         });
 
+        jmiAltaDeMaterias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
         jmiAltaDeMaterias.setText("Alta de materias");
         jmiAltaDeMaterias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,6 +68,7 @@ public class viewMenu extends javax.swing.JFrame {
         });
         jmAltas.add(jmiAltaDeMaterias);
 
+        jmiAltaDeAlumnos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         jmiAltaDeAlumnos.setText("Alta de alumnos");
         jmiAltaDeAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +77,7 @@ public class viewMenu extends javax.swing.JFrame {
         });
         jmAltas.add(jmiAltaDeAlumnos);
 
-        jMenuBar1.add(jmAltas);
+        jmbManu.add(jmAltas);
 
         jmFormularioDeInscripcion.setText("Formulario de inscripción");
         jmFormularioDeInscripcion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -80,7 +85,17 @@ public class viewMenu extends javax.swing.JFrame {
                 jmFormularioDeInscripcionMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jmFormularioDeInscripcion);
+
+        jmiInscribirAlumno.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.ALT_MASK));
+        jmiInscribirAlumno.setText("Inscribir alumno");
+        jmiInscribirAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiInscribirAlumnoActionPerformed(evt);
+            }
+        });
+        jmFormularioDeInscripcion.add(jmiInscribirAlumno);
+
+        jmbManu.add(jmFormularioDeInscripcion);
 
         jmSalir.setText("Salir");
         jmSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,9 +108,19 @@ public class viewMenu extends javax.swing.JFrame {
                 jmSalirActionPerformed(evt);
             }
         });
-        jMenuBar1.add(jmSalir);
 
-        setJMenuBar(jMenuBar1);
+        jmiSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        jmiSalir.setText("Salir");
+        jmiSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiSalirActionPerformed(evt);
+            }
+        });
+        jmSalir.add(jmiSalir);
+
+        jmbManu.add(jmSalir);
+
+        setJMenuBar(jmbManu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,6 +134,7 @@ public class viewMenu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiAltaDeMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAltaDeMateriasActionPerformed
@@ -140,10 +166,14 @@ public class viewMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jmSalirActionPerformed
 
     private void jmSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSalirMouseClicked
-        dispose();
+        
     }//GEN-LAST:event_jmSalirMouseClicked
 
     private void jmFormularioDeInscripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmFormularioDeInscripcionMouseClicked
+        
+    }//GEN-LAST:event_jmFormularioDeInscripcionMouseClicked
+
+    private void jmiInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiInscribirAlumnoActionPerformed
         escritorio.removeAll();
         escritorio.repaint();
         
@@ -151,7 +181,11 @@ public class viewMenu extends javax.swing.JFrame {
         fdi.setVisible(true);
         escritorio.add(fdi);
         escritorio.moveToFront(fdi);
-    }//GEN-LAST:event_jmFormularioDeInscripcionMouseClicked
+    }//GEN-LAST:event_jmiInscribirAlumnoActionPerformed
+
+    private void jmiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_jmiSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,11 +224,13 @@ public class viewMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jmAltas;
     private javax.swing.JMenu jmFormularioDeInscripcion;
     private javax.swing.JMenu jmSalir;
+    private javax.swing.JMenuBar jmbManu;
     private javax.swing.JMenuItem jmiAltaDeAlumnos;
     private javax.swing.JMenuItem jmiAltaDeMaterias;
+    private javax.swing.JMenuItem jmiInscribirAlumno;
+    private javax.swing.JMenuItem jmiSalir;
     // End of variables declaration//GEN-END:variables
 }

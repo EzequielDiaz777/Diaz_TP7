@@ -7,7 +7,9 @@ package Diaz_TP7.vista;
 
 import Diaz_TP7.entidad.Alumno;
 import Diaz_TP7.entidad.Materia;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,8 +29,35 @@ public class viewFormularioDeInscripcion extends javax.swing.JInternalFrame {
         this.listaDeMaterias = listaDeMaterias;
         llenarComboAlumnos();
         llenarComboMaterias();
+        this.requestFocus();
     }
 
+    public void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+    
+    public void agregarMateriaAlAlumno(){
+        try{
+            Alumno a = (Alumno) jcbElijaUnAlumno.getSelectedItem();
+            Materia m = (Materia) jcbElijaUnaMateria.getSelectedItem();
+            a.agregarMateria(m);
+        }catch(NullPointerException npe){
+            mensaje("La lista de alumnos o la de materias esta vacia, por favor agregue por lo menos una materia y un alumno para inscribirlo en dicha materia.");
+        }
+    }
+    
+    public void llenarComboAlumnos(){
+        for(Alumno a: listaDeAlumnos){
+            jcbElijaUnAlumno.addItem(a);
+        }
+    }
+    
+    public void llenarComboMaterias(){
+        for(Materia m: listaDeMaterias){
+            jcbElijaUnaMateria.addItem(m);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,11 +87,21 @@ public class viewFormularioDeInscripcion extends javax.swing.JInternalFrame {
                 jbSalirActionPerformed(evt);
             }
         });
+        jbSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbSalirKeyPressed(evt);
+            }
+        });
 
         jbInscribir.setText("Inscribir");
         jbInscribir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbInscribirActionPerformed(evt);
+            }
+        });
+        jbInscribir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbInscribirKeyPressed(evt);
             }
         });
 
@@ -101,14 +140,14 @@ public class viewFormularioDeInscripcion extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlElijaUnAlumno)
                     .addComponent(jcbElijaUnAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSalir)
                     .addComponent(jbInscribir))
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(80, 80, 396, 189);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -116,22 +155,21 @@ public class viewFormularioDeInscripcion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-        Alumno a = (Alumno) jcbElijaUnAlumno.getSelectedItem();
-        Materia m = (Materia) jcbElijaUnaMateria.getSelectedItem();
-        a.agregarMateria(m);
+        agregarMateriaAlAlumno();
     }//GEN-LAST:event_jbInscribirActionPerformed
 
-    public void llenarComboAlumnos(){
-        for(Alumno a: listaDeAlumnos){
-            jcbElijaUnAlumno.addItem(a);
+    private void jbInscribirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbInscribirKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            agregarMateriaAlAlumno();
         }
-    }
-    
-    public void llenarComboMaterias(){
-        for(Materia m: listaDeMaterias){
-            jcbElijaUnaMateria.addItem(m);
+    }//GEN-LAST:event_jbInscribirKeyPressed
+
+    private void jbSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbSalirKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dispose();
         }
-    }
+    }//GEN-LAST:event_jbSalirKeyPressed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbInscribir;
     private javax.swing.JButton jbSalir;

@@ -6,6 +6,7 @@
 package Diaz_TP7.vista;
 
 import Diaz_TP7.entidad.Materia;
+import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
 
@@ -22,8 +23,40 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
     public viewFormularioDeMaterias(HashSet<Materia>listaDeMaterias) {
         initComponents();
         this.listaDeMaterias = listaDeMaterias;
+        this.requestFocus();
+        jtfCodigoDeMateria.requestFocus();
+    }
+    
+    public void mensaje(String mensaje){
+        JOptionPane.showMessageDialog(this,mensaje);
     }
 
+    public void agregarMateria(){
+        int codigoDeMateria = Integer.parseInt(jtfCodigoDeMateria.getText());
+        int añoAlQuePertenece = Integer.parseInt(jtfAñoAlQuePertenece.getText());
+        Materia materia = new Materia(codigoDeMateria, jtfNombreDeLaMateria.getText(), añoAlQuePertenece);
+        if(listaDeMaterias.isEmpty()){
+                listaDeMaterias.add(materia);
+                mensaje("Materia registrada correctamente.");
+                limpiar();
+            } else {
+            boolean agregar = listaDeMaterias.add(materia);
+                if(agregar){
+                    listaDeMaterias.add(materia);
+                    mensaje("Materia registrada correctamente.");
+                    limpiar();
+                } else {
+                    mensaje("La materia ya se encuentra registrada.");
+                }
+            }
+    }
+    
+    public void limpiar(){
+        jtfCodigoDeMateria.setText("");
+        jtfNombreDeLaMateria.setText("");
+        jtfAñoAlQuePertenece.setText("");
+        jtfCodigoDeMateria.requestFocus();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,11 +90,42 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
                 jtfNombreDeLaMateriaActionPerformed(evt);
             }
         });
+        jtfNombreDeLaMateria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfNombreDeLaMateriaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfNombreDeLaMateriaKeyTyped(evt);
+            }
+        });
+
+        jtfAñoAlQuePertenece.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfAñoAlQuePerteneceKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfAñoAlQuePerteneceKeyTyped(evt);
+            }
+        });
+
+        jtfCodigoDeMateria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfCodigoDeMateriaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfCodigoDeMateriaKeyTyped(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSalirActionPerformed(evt);
+            }
+        });
+        jbSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbSalirKeyPressed(evt);
             }
         });
 
@@ -71,11 +135,21 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
                 jbGuardarActionPerformed(evt);
             }
         });
+        jbGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbGuardarKeyPressed(evt);
+            }
+        });
 
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNuevoActionPerformed(evt);
+            }
+        });
+        jbNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jbNuevoKeyPressed(evt);
             }
         });
 
@@ -127,7 +201,7 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlAñoAlQuePertenece)
                     .addComponent(jtfAñoAlQuePertenece, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSalir)
                     .addComponent(jbGuardar)
@@ -135,7 +209,7 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(80, 80, 400, 235);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfNombreDeLaMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNombreDeLaMateriaActionPerformed
@@ -147,41 +221,92 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        jtfCodigoDeMateria.setText("");
-        jtfNombreDeLaMateria.setText("");
-        jtfAñoAlQuePertenece.setText("");
+        
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        try{
-            int codigoDeMateria = Integer.parseInt(jtfCodigoDeMateria.getText());
-            int añoAlQuePertenece = Integer.parseInt(jtfAñoAlQuePertenece.getText());
-            Materia materia = new Materia(codigoDeMateria, jtfNombreDeLaMateria.getText(), añoAlQuePertenece);
-            if(listaDeMaterias.isEmpty()){
-                listaDeMaterias.add(materia);
-                jtfCodigoDeMateria.setText("");
-                jtfNombreDeLaMateria.setText("");
-                jtfAñoAlQuePertenece.setText("");
-                JOptionPane.showMessageDialog(this,"Materia registrada correctamente.");
-            } else {
-            boolean agregar = listaDeMaterias.add(materia);
-                if(agregar){
-                    listaDeMaterias.add(materia);
-                    jtfCodigoDeMateria.setText("");
-                    jtfNombreDeLaMateria.setText("");
-                    jtfAñoAlQuePertenece.setText("");
-                    JOptionPane.showMessageDialog(this,"Materia registrada correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(this,"La materia ya se encuentra registrada.");
-                    jtfCodigoDeMateria.setText("");
-                    jtfNombreDeLaMateria.setText("");
-                    jtfAñoAlQuePertenece.setText("");
-                }
-            }
-        } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this,"Código o año incorrecto.");
+        if (jtfCodigoDeMateria.getText().trim().length() == 0 || jtfNombreDeLaMateria.getText().trim().length() == 0 || jtfAñoAlQuePertenece.getText().trim().length() == 0) {
+            mensaje("Faltan rellenar campos.");
+        } else {
+            agregarMateria();
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jtfCodigoDeMateriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodigoDeMateriaKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtfCodigoDeMateriaKeyTyped
+
+    private void jtfAñoAlQuePerteneceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfAñoAlQuePerteneceKeyTyped
+        char c = evt.getKeyChar();
+        if (!(Character.isDigit(c)) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        String Caracteres = jtfAñoAlQuePertenece.getText();
+        if (Caracteres.length() >= 2) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtfAñoAlQuePerteneceKeyTyped
+
+    private void jbGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbGuardarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfCodigoDeMateria.getText().trim().length() == 0 || jtfNombreDeLaMateria.getText().trim().length() == 0 || jtfAñoAlQuePertenece.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarMateria();
+            }
+        }
+    }//GEN-LAST:event_jbGuardarKeyPressed
+
+    private void jbNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbNuevoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            limpiar();
+        }
+    }//GEN-LAST:event_jbNuevoKeyPressed
+
+    private void jtfCodigoDeMateriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodigoDeMateriaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfCodigoDeMateria.getText().trim().length() == 0 || jtfNombreDeLaMateria.getText().trim().length() == 0 || jtfAñoAlQuePertenece.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarMateria();
+            }
+        }
+    }//GEN-LAST:event_jtfCodigoDeMateriaKeyPressed
+
+    private void jtfNombreDeLaMateriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreDeLaMateriaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfCodigoDeMateria.getText().trim().length() == 0 || jtfNombreDeLaMateria.getText().trim().length() == 0 || jtfAñoAlQuePertenece.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarMateria();
+            }
+        }
+    }//GEN-LAST:event_jtfNombreDeLaMateriaKeyPressed
+
+    private void jtfNombreDeLaMateriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreDeLaMateriaKeyTyped
+        
+    }//GEN-LAST:event_jtfNombreDeLaMateriaKeyTyped
+
+    private void jtfAñoAlQuePerteneceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfAñoAlQuePerteneceKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jtfCodigoDeMateria.getText().trim().length() == 0 || jtfNombreDeLaMateria.getText().trim().length() == 0 || jtfAñoAlQuePertenece.getText().trim().length() == 0) {
+                mensaje("Faltan rellenar campos.");
+            } else {
+                agregarMateria();
+            }
+        }
+    }//GEN-LAST:event_jtfAñoAlQuePerteneceKeyPressed
+
+    private void jbSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbSalirKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dispose();
+        }
+    }//GEN-LAST:event_jbSalirKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
