@@ -78,7 +78,7 @@ public class viewFormularioDeAlumnos extends javax.swing.JInternalFrame {
         jtfApellido = new javax.swing.JTextField();
         jtfNombre = new javax.swing.JTextField();
 
-        setTitle("Formulario de alumnos");
+        setTitle("Formulario de Alumnos");
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {

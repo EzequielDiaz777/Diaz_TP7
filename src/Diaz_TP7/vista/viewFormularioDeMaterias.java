@@ -77,7 +77,7 @@ public class viewFormularioDeMaterias extends javax.swing.JInternalFrame {
         jbGuardar = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
 
-        setTitle("Formulario de materias");
+        setTitle("Formulario de Materias");
 
         jlCodigoDeMateria.setText("Código de materia:");
 

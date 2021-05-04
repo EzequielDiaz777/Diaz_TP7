@@ -75,7 +75,7 @@ public class viewFormularioDeInscripcion extends javax.swing.JInternalFrame {
         jbSalir = new javax.swing.JButton();
         jbInscribir = new javax.swing.JButton();
 
-        setTitle("Formulario de inscripción");
+        setTitle("Formulario de Inscripción");
 
         jlFormularioDeInscripcion.setText("Formulario de Inscripción");
 
